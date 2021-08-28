@@ -29,7 +29,7 @@ public class Main {
             //custUserList.add(randomUserList);
 
             List userInfo = custUserList.get(48);
-            System.out.println("Processing Get Method for Index");
+            System.out.println("## Processing Get Method for Index ##");
 
             System.out.println("Total Length of the Array=" + custUserList.getSize());
 

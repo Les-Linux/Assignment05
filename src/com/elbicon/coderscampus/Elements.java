@@ -2,10 +2,6 @@ package com.elbicon.coderscampus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Elements {
     Long lastElement;
