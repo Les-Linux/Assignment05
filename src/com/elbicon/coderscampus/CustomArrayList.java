@@ -24,12 +24,11 @@ public class CustomArrayList<T> implements CustomList<T> {
 
             for (int i = 0; i <= newUserCount - 1; i++) { //insert from index 0
                 if (lastElement == 0 && i <= arrayTotalSize - 1) {
-                    //this.items[i] = ((ArrayList<?>) item).get(i);
-                    this.items[i] = ((ArrayList<Users>) item).get(i);
-                    //break;
+                    this.items[i] = ((ArrayList<?>) item).get(i);
+                    //this.items[i] = ((ArrayList<Users>) item).get(i);
                 } else if (lastElement != 0 && i <= arrayTotalSize - 1 && indexFree()) {
-                   // this.items[lastElement.intValue()] = ((ArrayList<?>) item).get(i);
-                    this.items[lastElement.intValue()] = ((ArrayList<Users>) item).get(i);
+                    this.items[lastElement.intValue()] = ((ArrayList<?>) item).get(i);
+                    //this.items[lastElement.intValue()] = ((ArrayList<Users>) item).get(i);
                     lastElement++;
                 } else {
                     updateArraySize(this.items.length * 2);
@@ -60,8 +59,8 @@ public class CustomArrayList<T> implements CustomList<T> {
 
     @Override
     public int getSize() {
-       // return this.items.length;
-       // Arrays.stream(this.items).mapToInt(x -> x.intValue());
+        // return this.items.length;
+        // Arrays.stream(this.items).mapToInt(x -> x.intValue());
         return indices.getCurrentUserCount().intValue();
 
         //return 0;
@@ -70,7 +69,7 @@ public class CustomArrayList<T> implements CustomList<T> {
     @Override
     public T get(int index) {
         try {
-            if (index <= this.items.length -1) {
+            if (index <= this.items.length - 1) {
                 List userIndex = IntStream.range(0, items.length)
                         .mapToObj(m -> this.items[index])
                         .distinct()

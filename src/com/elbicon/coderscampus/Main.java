@@ -22,16 +22,16 @@ public class Main {
             randomUserList = userList.createUserList(9);
             System.out.println("Update Succeeded? - " + custUserList.add(randomUserList) + "\n");
 
-            randomUserList = userList.createUserList(3);
+            randomUserList = userList.createUserList(8);
             System.out.println("Update Succeeded? - " + custUserList.add(randomUserList) + "\n");
 
 
-            randomUserList = userList.createUserList(22);
+            randomUserList = userList.createUserList(12);
             System.out.println("Update Succeeded? - " + custUserList.add(randomUserList) + "\n");
 
 
             //0 based index search
-            List<List<Users>> userInfo = custUserList.get(43);
+            List<List<Users>> userInfo = custUserList.get(19);
 
 
             System.out.println("## Processing Get Method for Index ##");
@@ -41,10 +41,10 @@ public class Main {
             if (userInfo.size() == 0) {
                 System.out.println("Search by Index returned 'NULL'");
             } else {
-                if(userInfo.stream().findFirst().toString().contains("Index")){
+                if (userInfo.stream().findFirst().toString().contains("Index")) {
                     System.out.println(userInfo.toString());
                     System.exit(0);
-                }else{
+                } else {
                     userInfo.stream()
                             .flatMap(u -> u.stream())
                             .forEach(f -> {

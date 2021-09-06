@@ -16,15 +16,15 @@ public class PopulateUserList {
             StringBuilder lastName = new StringBuilder();
             for (int i = 0; i < userCount; i++) {
                 Users user = new Users();
-                for(int randChar = 0; randChar< 7;randChar++){
+                for (int randChar = 0; randChar < 7; randChar++) {
                     firstName.append(alphaNumerics.charAt(random.nextInt(alphaNumerics.length())));
                     lastName.append(alphaNumerics.charAt(random.nextInt(alphaNumerics.length())));
                 }
                 user.setFirstName(firstName.toString());
                 user.setLastName(lastName.toString());
-                List a = new ArrayList();
-                a.add(user);
-                siteUsers.add(a);
+                List userCol = new ArrayList();
+                userCol.add(user);
+                siteUsers.add(userCol);
                 firstName.setLength(0);
                 lastName.setLength(0);
             }
