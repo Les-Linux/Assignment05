@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 public class PopulateUserList {
-    public ArrayList<Users> createUserList(int userCount) {
-        ArrayList<Users> siteUsers = new ArrayList();
+    public List<List<Users>> createUserList(int userCount) {
+        List<List<Users>> siteUsers = new ArrayList<List<Users>>();
         Random random = new Random();
         String alphaNumerics = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
@@ -22,7 +22,9 @@ public class PopulateUserList {
                 }
                 user.setFirstName(firstName.toString());
                 user.setLastName(lastName.toString());
-                siteUsers.add(user);
+                List a = new ArrayList();
+                a.add(user);
+                siteUsers.add(a);
                 firstName.setLength(0);
                 lastName.setLength(0);
             }
