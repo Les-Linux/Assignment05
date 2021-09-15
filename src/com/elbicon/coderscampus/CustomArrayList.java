@@ -2,6 +2,7 @@ package com.elbicon.coderscampus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -10,80 +11,104 @@ public class CustomArrayList<T> implements CustomList<T> {
     Object[] items = new Object[10];
     Elements indices = new Elements();
     Integer arrayTotalSize;
+    Integer size = 0;
     Long currentUserCount;
     Integer newUserCount;
     Long lastElement;
 
-
+    /*
+        Revised add method based on feedback from Roche
+    */
     @Override
-    public boolean add(T item) {
-        try {
-            updateNewUserCount(item);
-            updateCountStats();
-            updateArraySize(items.length);
-
-            for (int i = 0; i <= newUserCount - 1; i++) { //insert from index 0
-                if (lastElement == 0 && i <= arrayTotalSize - 1) {
-                    this.items[i] = ((ArrayList<?>) item).get(i);
-                    //this.items[i] = ((ArrayList<Users>) item).get(i);
-                } else if (lastElement != 0 && i <= arrayTotalSize - 1 && indexFree()) {
-                    this.items[lastElement.intValue()] = ((ArrayList<?>) item).get(i);
-                    //this.items[lastElement.intValue()] = ((ArrayList<Users>) item).get(i);
-                    lastElement++;
-                } else {
-                    updateArraySize(this.items.length * 2);
-                    updateCountStats();
-                    this.items = Arrays.copyOf(this.items, arrayTotalSize);
-
-                    updateCountStats();
-                    this.items[lastElement.intValue()] = ((ArrayList<?>) item).get(i);
-
-                    updateCountStats();
-
-                }
+    public boolean add(T item){
+        if (size == items.length){
+            //resize the object double in size
+            items = Arrays.copyOf(items, items.length * 2);
             }
-            updateCountStats();
-            updateNewUserCount(item);
 
-            //For Informational Purpose Only
-            System.out.println("ArrayTotalSize=" + arrayTotalSize);
-            System.out.println("UserCount=" + currentUserCount);
-            System.out.println("NewUserAdded=" + newUserCount);
+            items[size] = item;
+            size++;
 
             return true;
-        } catch (Exception e) {
-            System.out.println("Exception Caught - " + e.getMessage());
         }
-        return false;
-    }
 
     @Override
-    public int getSize() {
-        // return this.items.length;
-        // Arrays.stream(this.items).mapToInt(x -> x.intValue());
-        return indices.getCurrentUserCount().intValue();
+    public boolean add(int index, T item) throws IndexOutOfBoundsException {
+        size = 0;
+        Object[] newObject = null;
+        if (size == items.length){
+            //resize the object double in size
+            items = Arrays.copyOf(items, items.length * 2);
+        }
 
-        //return 0;
+        if (items[index] == null) {
+            items[index] = item;
+            size++;
+        }else {
+            newObject = new Object[items.length + 1];
+            Integer totalElements = getIndexElementsSize();
+            for ( int i=0; i < totalElements + 1; i++) {
+                if(i < index - 1 && (!(items[i] == null))){
+                    newObject[i] = items[i];
+                    size++;
+                } else if (i == index - 1 && (!(items[i] == null))) {
+                    newObject[i] = item;
+                    size++;
+                }else {
+                        newObject[i] = items[i - 1];
+                        size++;
+                }
+            }
+
+        }
+        items = Arrays.copyOf(newObject, newObject.length);
+        return true;
     }
 
+
+    /*
+     *  Revised getSize method based on feedback from Roche
+     */
+    @Override
+    public int getSize() {
+        return size;
+    }
+
+    /*
+     *  Revised get method based on feedback from Roche
+     */
     @Override
     public T get(int index) {
         try {
-            if (index <= this.items.length - 1) {
-                List userIndex = IntStream.range(0, items.length)
-                        .mapToObj(m -> this.items[index])
-                        .distinct()
-                        .filter(f -> f != null)
-                        .collect(Collectors.toList());
-                return (T) userIndex;
-            } else {
-                List<String> indexOutOfBounds = new ArrayList<>();
-                indexOutOfBounds.add("*** User Index out of Bounds ***");
-                return (T) indexOutOfBounds;
+            if (index >= size) {
+                throw new ArrayIndexOutOfBoundsException();
             }
+            return (T) items[index];
         } catch (Exception e) {
             System.out.println("Exception Caught " + e.getMessage());
         }
+        return null;
+    }
+
+    @Override
+    public T remove(int index) throws IndexOutOfBoundsException {
+        size=0;
+        Integer totalElements = getIndexElementsSize();
+        Object[] newObject = new Object[items.length -1];
+        for ( int i=0; i < totalElements - 1; i++) {
+            if(i < index - 1) {
+                newObject[i] = items[i];
+                size++;
+            } else if (i == index - 1) {
+                newObject[i] = items[i + 1];
+                size++;
+                //i++;
+            }else {
+                newObject[i] = items[i + 1];
+                size++;
+            }
+        }
+
         return null;
     }
 
@@ -112,5 +137,11 @@ public class CustomArrayList<T> implements CustomList<T> {
             return false;
         }
         return true;
+    }
+
+    private Integer getIndexElementsSize(){
+        ArrayList itemsCount = new ArrayList(Arrays.asList(items));
+        itemsCount.removeAll(Collections.singleton(null));
+        return itemsCount.size();
     }
 }

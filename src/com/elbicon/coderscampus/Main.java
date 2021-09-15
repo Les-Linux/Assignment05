@@ -13,6 +13,9 @@ public class Main {
         startTest();
     }
 
+    /*
+     *  Revised the main method based on feedback from Roche
+     */
     public static void startTest() {
         // TEST STATEMENTS
         try {
@@ -26,36 +29,24 @@ public class Main {
             System.out.println("Update Succeeded? - " + custUserList.add(randomUserList) + "\n");
 
 
-            randomUserList = userList.createUserList(12);
+            randomUserList = userList.createUserList(13);
             System.out.println("Update Succeeded? - " + custUserList.add(randomUserList) + "\n");
 
+            System.out.println("Total Size=" + custUserList.getSize());
 
-            //0 based index search
-            List<List<Users>> userInfo = custUserList.get(19);
+            // Add @param index
+            randomUserList = userList.createUserList(1);
+            System.out.println("Update Succeeded? - " + custUserList.add(2,randomUserList));
+            System.out.println("Updated Total Size=" + custUserList.getSize());
 
+            //Remove @param index
+            System.out.println("Update Succeeded? - " + custUserList.remove(5));
+            System.out.println("Updated Total Size=" + custUserList.getSize());
 
-            System.out.println("## Processing Get Method for Index ##");
-
-            System.out.println("Total Elements in the Array=" + custUserList.getSize());
-
-            if (userInfo.size() == 0) {
-                System.out.println("Search by Index returned 'NULL'");
-            } else {
-                if (userInfo.stream().findFirst().toString().contains("Index")) {
-                    System.out.println(userInfo.toString());
-                    System.exit(0);
-                } else {
-                    userInfo.stream()
-                            .flatMap(u -> u.stream())
-                            .forEach(f -> {
-                                if (f.toString().contains("Index")) {
-                                    System.out.println("\n" + f.toString());
-                                } else if (f.getClass().getSimpleName().equals("Users")) {
-                                    System.out.println("First Name=" + f.getFirstName() + " Last Name=" + f.getLastName());
-                                }
-                            });
-                }
-            }
+/*            for (int i=0; i <10;i++){
+                randomUserList = userList.createUserList((new Random()).nextInt(10));
+                System.out.println("Update Succeeded? = " + custUserList.add(randomUserList) + "\n");
+            }*/
         } catch (Exception e) {
             System.out.println("Exception Caught:" + e.getMessage());
         }
